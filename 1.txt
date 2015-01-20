@@ -1,0 +1,22 @@
+select 
+'create trigger trigger_'+o.name+'
+on '+o.name+'
+for insert,update,delete
+as
+if not exists(select * from deleted) and exists(select * from inserted)---²åÈë
+begin
+	insert into Increment (id,tablename,fieldname,fieldvalue,operatetype,operatetime) select newid(1),'''+o.name+''','''+index_col(o.name,indid,1)+''','+index_col(o.name,indid,1)+',''I'',getDate() from inserted
+end
+
+else if exists(select * from deleted) and not exists(select * from inserted)---É¾³ý
+begin
+	insert into Increment (id,tablename,fieldname,fieldvalue,operatetype,operatetime) select newid(1),'''+o.name+''','''+index_col(o.name,indid,1)+''','+index_col(o.name,indid,1)+',''D'',getDate() from deleted
+end
+
+else if exists(select * from deleted) and exists(select * from inserted)---¸üÐÂ
+begin
+	insert into Increment (id,tablename,fieldname,fieldvalue,operatetype,operatetime) select newid(1),'''+o.name+''','''+index_col(o.name,indid,1)+''','+index_col(o.name,indid,1)+',''U'',getDate()  from inserted
+end
+go
+' from sysobjects o,sysindexes i
+where o.id=i.id and o.type='U' and status&2048=2048
