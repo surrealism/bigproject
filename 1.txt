@@ -3,17 +3,17 @@ select
 on '+o.name+'
 for insert,update,delete
 as
-if not exists(select * from deleted) and exists(select * from inserted)---²åÈë
+if not exists(select * from deleted) and exists(select * from inserted)---insert
 begin
 	insert into Increment (id,tablename,fieldname,fieldvalue,operatetype,operatetime) select newid(1),'''+o.name+''','''+index_col(o.name,indid,1)+''','+index_col(o.name,indid,1)+',''I'',getDate() from inserted
 end
 
-else if exists(select * from deleted) and not exists(select * from inserted)---É¾³ý
+else if exists(select * from deleted) and not exists(select * from inserted)---delete
 begin
 	insert into Increment (id,tablename,fieldname,fieldvalue,operatetype,operatetime) select newid(1),'''+o.name+''','''+index_col(o.name,indid,1)+''','+index_col(o.name,indid,1)+',''D'',getDate() from deleted
 end
 
-else if exists(select * from deleted) and exists(select * from inserted)---¸üÐÂ
+else if exists(select * from deleted) and exists(select * from inserted)---update
 begin
 	insert into Increment (id,tablename,fieldname,fieldvalue,operatetype,operatetime) select newid(1),'''+o.name+''','''+index_col(o.name,indid,1)+''','+index_col(o.name,indid,1)+',''U'',getDate()  from inserted
 end
