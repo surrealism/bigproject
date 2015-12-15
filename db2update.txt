@@ -1,0 +1,32 @@
+db2 (@DB2, KEVIN   @TEST)SELECT * FROM TEST
+
+ COL1       COL2       COL3
+ ---------- ---------- ----------
+ ABC        001        TEST
+ ABC        002        TEST
+ ABC        003        SAFD
+ XYZ        001        TEST
+ XYZ        002        SAFD
+ XYZ        003        SAFD
+
+   6 条记录已选择。
+
+db2 (@DB2, KEVIN   @TEST)UPDATE (SELECT * FROM TEST ORDER BY COL2 FETCH FIRST 3 ROWS ONLY) SET COL3
+ = 'HelloWorld'
+ DB20000I  SQL 命令成功完成。
+db2 (@DB2, KEVIN   @TEST)SELECT * FROM TEST
+
+ COL1       COL2       COL3
+ ---------- ---------- ----------
+ ABC        001        HelloWorld
+ ABC        002        HelloWorld
+ ABC        003        SAFD
+ XYZ        001        HelloWorld
+ XYZ        002        SAFD
+ XYZ        003        SAFD
+
+   6 条记录已选择。
+
+db2 (@DB2, KEVIN   @TEST)commit
+ DB20000I  SQL 命令成功完成。
+db2 (@DB2, KEVIN   @TEST)
