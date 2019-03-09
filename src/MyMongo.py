@@ -6,10 +6,11 @@ import socket
 import random
 from flask import request
 from pymongo import MongoClient
+from util.MyFunc import BigUtil
 
 def Unicode():
     val = random.randint(0x4e00, 0x9fbf)
-    return unichr(val)
+    return chr(val)
 	
 def get_request_ip():
 	'''获取请求方的ip'''
@@ -36,6 +37,18 @@ conn = MongoClient('mongodb://lcc:lcc@ds121089.mlab.com:21089/lccdb')
 db = conn.lccdb  #11
 my_set = db.foo  #22
 
-my_set.insert({"d":datetime.datetime.now(),"ip":get_my_ip(),"zh":Unicode()+Unicode()+Unicode()})
-for i in my_set.find():
-    print(i)
+BigUtil.func1()
+
+ip = get_my_ip()
+for num in range(1,100):
+	zh = ''
+	zhmaxnum = random.randint(1,10)
+	for zhnum in range(1,zhmaxnum):
+		zh += Unicode()
+#	my_set.insert_one({"d":datetime.datetime.now(),"ip":ip,"num":num,"zh":zh})
+
+#for i in my_set.find():
+#    print(i)
+	
+for i in my_set.find({"num":{"$gt":50}}):
+    print(i)	
