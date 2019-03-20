@@ -49,6 +49,7 @@ db = conn.lccdb  #11
 my_set = db.foo  #22
 
 BigUtil.func1()
+BigUtil.pypg()
 
 ip = GetLocalIPByPrefix("10.") #get_my_ip()
 mac = get_mac_address()
@@ -57,10 +58,10 @@ for num in range(1,100):
 	zhmaxnum = random.randint(1,10)
 	for zhnum in range(1,zhmaxnum):
 		zh += Unicode()
-	my_set.insert_one({"d":datetime.datetime.now(),"ip":ip,"mac":mac,"num":num,"zh":zh})
+#	my_set.insert_one({"d":datetime.datetime.now(),"ip":ip,"mac":mac,"num":num,"zh":zh})
 
 #for i in my_set.find():
 #    print(i)
 	
-for i in my_set.find({"num":{"$gt":50}}):
-    print(i)	
+#for i in my_set.find({"num":{"$gt":50}}):
+#    print(i)	
