@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="GBK"?>
+
+<VIEW>
+ <CATALOG>aic</CATALOG>
+ <SCHEMA>dbo</SCHEMA>
+ <NAME>v_ent</NAME>
+ <COLUMNS>
+  <COLUMN>
+   <NAME>注册号</NAME>
+  </COLUMN>
+  <COLUMN>
+   <NAME>企业名称</NAME>
+  </COLUMN>
+ </COLUMNS>
+ <SELECT>
+select regno 注册号,corpname 企业名称
+from   mar m
+where aicid like &#39;440%&#39; 
+ </SELECT>
+</VIEW>
+
